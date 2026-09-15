@@ -76,6 +76,7 @@ struct RouterCoreTests {
         let link = try #require(WebLink("https://example.com"))
         for profile in ["../Default", "/tmp/Profile 1", "Guest Profile", "System Profile", "Profile ", "Profile 1/../../", "--incognito"] {
             #expect(throws: (any Error).self) { try ChromeArguments.make(profileID: profile, link: link) }
+            #expect(throws: (any Error).self) { try ChromeArguments.make(profileID: profile) }
         }
     }
 

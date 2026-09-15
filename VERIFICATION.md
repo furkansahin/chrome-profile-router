@@ -28,6 +28,7 @@ Verified during implementation:
 - Picker dark appearance and native accessibility profile labels were inspected.
 - Settings preserved the chosen profile and displayed the editable source list, active link handling, and enabled login registration.
 - The owner confirmed a real iTerm link click opened in Work.
+- The installed menu-bar menu listed all discovered profiles above Settings and Quit. Clicking a profile opened the matching Chrome profile, confirmed through Chrome's profile menu.
 
 Checks were performed across development builds; the complete integration suite has not been repeated on every subsequent revision.
 

@@ -89,8 +89,8 @@ public struct RequestQueue: Sendable {
 }
 
 public enum ChromeArguments {
-    public static func make(profileID: String, link: WebLink) throws -> [String] {
+    public static func make(profileID: String, link: WebLink? = nil) throws -> [String] {
         guard ProfileParser.validDirectory(profileID) else { throw ProfileError.missingProfile }
-        return ["--profile-directory=\(profileID)", link.rawValue]
+        return ["--profile-directory=\(profileID)"] + (link.map { [$0.rawValue] } ?? [])
     }
 }

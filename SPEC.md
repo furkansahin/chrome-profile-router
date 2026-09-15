@@ -47,6 +47,8 @@ Each incoming click remains a separate request, including identical URLs. Proces
 
 Do not reclaim the default-browser association automatically. Changing the system default browser disables routing. Launching the app from Finder opens Settings; normal operation has a menu-bar item and no persistent Dock icon.
 
+The menu-bar menu lists discovered Chrome profiles above Settings and Quit. Selecting one launches that profile directly without requiring a pending URL or changing routing settings. Revalidate the profile before launch and show recovery if it is unavailable. Keep the visible menu order stable while refreshing discovery for its next opening.
+
 ## Profiles and errors
 
 Read standard Chrome profile metadata and local avatar files only. Refresh off the main thread before routing, and revalidate the chosen profile before dispatch. Exclude Guest, System, omitted, and missing profiles. Disambiguate duplicate display names with directory IDs. Unreadable avatars fall back to initials.

@@ -5,6 +5,7 @@ A small native macOS menu-bar app that sends links to the right Chrome profile, 
 - Choose one **Work profile** and the apps whose links should open there automatically.
 - **Slack** and **iTerm** are included initially; add or remove source apps in Settings.
 - Links from other apps show a compact picker with profile avatars and keyboard shortcuts.
+- Open any discovered Chrome profile directly from the menu-bar menu.
 - Browsing inside Chrome continues normally.
 
 ## Build and install
@@ -33,6 +34,8 @@ If profile discovery needs permission, use **Allow Chrome profiles…** to selec
 ## Picker
 
 Click a profile, press its number (1–9), or use the arrow/Tab keys followed by Return. Escape or an outside click cancels pending picker choices. Repeated links stay separate; automatic Work links queued behind a picker retain their destination.
+
+The menu-bar icon also lists your Chrome profiles above Settings and Quit. Select a profile to open it directly. This does not change your Work profile or routing rules.
 
 The app stores the Work selection by profile directory identifier, so renaming a profile preserves the mapping. If the destination disappears, the app asks again instead of silently choosing another profile.
 

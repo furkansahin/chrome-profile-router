@@ -86,7 +86,7 @@ enum ChromeLauncher {
         return NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.google.Chrome")
     }
 
-    static func open(_ link: WebLink, profileID: String, catalog: ProfileCatalog) async throws {
+    static func open(_ link: WebLink? = nil, profileID: String, catalog: ProfileCatalog) async throws {
         guard await catalog.refresh() else { throw ProfileError.unreadable }
         guard catalog.profiles.contains(where: { $0.id == profileID }) else { throw ProfileError.missingProfile }
         guard let app = appURL else { throw ProfileError.chromeMissing }

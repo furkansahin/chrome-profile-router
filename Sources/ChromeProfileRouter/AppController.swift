@@ -2,7 +2,7 @@ import AppKit
 import RouterCore
 
 @MainActor
-final class AppController: NSObject, NSApplicationDelegate {
+final class AppController: NSObject, NSApplicationDelegate, NSMenuDelegate {
     let catalog = ProfileCatalog()
     let settings = SettingsModel()
     lazy var settingsWindow = SettingsWindow(model: settings, catalog: catalog)
@@ -80,11 +80,56 @@ final class AppController: NSObject, NSApplicationDelegate {
         item.button?.image = NSImage(systemSymbolName: "arrow.triangle.branch", accessibilityDescription: "Chrome Profile Router")
         item.button?.toolTip = "Chrome Profile Router"
         let menu = NSMenu()
+        menu.delegate = self
+        updateProfileMenu(menu)
+        item.menu = menu
+        statusItem = item
+    }
+
+    private func updateProfileMenu(_ menu: NSMenu) {
+        menu.removeAllItems()
+        let heading = menu.addItem(withTitle: "Open Chrome profile", action: nil, keyEquivalent: "")
+        heading.isEnabled = false
+        if catalog.profiles.isEmpty {
+            let unavailable = menu.addItem(withTitle: catalog.isRefreshing ? "Loading profiles…" : "No profiles available", action: nil, keyEquivalent: "")
+            unavailable.isEnabled = false
+            unavailable.toolTip = catalog.error
+        }
+        for profile in catalog.profiles {
+            let entry = menu.addItem(withTitle: profile.label, action: #selector(openProfileFromMenu(_:)), keyEquivalent: "")
+            entry.target = self
+            entry.representedObject = profile.id
+            entry.image = NSImage(systemSymbolName: "person.crop.circle", accessibilityDescription: nil)
+            entry.toolTip = "Open \(profile.label) in Chrome"
+        }
+        menu.addItem(.separator())
         menu.addItem(withTitle: "Settings…", action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
         menu.addItem(withTitle: "Quit", action: #selector(quit), keyEquivalent: "q").target = self
-        item.menu = menu
-        statusItem = item
+    }
+
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        updateProfileMenu(menu)
+        // Refresh for the next opening without moving items under the pointer
+        // while the current menu is being used. Dispatch revalidates the choice.
+        Task { await catalog.refresh() }
+    }
+
+    @objc private func openProfileFromMenu(_ sender: NSMenuItem) {
+        guard let profileID = sender.representedObject as? String else { return }
+        Task {
+            do {
+                try await ChromeLauncher.open(profileID: profileID, catalog: catalog)
+            } catch {
+                let alert = NSAlert()
+                alert.messageText = "Couldn’t open Chrome profile"
+                alert.informativeText = error.localizedDescription
+                alert.addButton(withTitle: "Settings…")
+                alert.addButton(withTitle: "Cancel")
+                NSApp.activate(ignoringOtherApps: true)
+                if alert.runModal() == .alertFirstButtonReturn { settingsWindow.show() }
+            }
+        }
     }
 
     @objc private func handleURL(_ event: NSAppleEventDescriptor, withReplyEvent reply: NSAppleEventDescriptor) {
