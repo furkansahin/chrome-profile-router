@@ -1,0 +1,12 @@
+.build/
+dist/
+.DS_Store
+*.xcuserstate
+.swiftpm/
+
+# Local verification scripts, notes, and credentials
+.local/
+.env
+.env.*
+*.p12
+*.mobileprovision
