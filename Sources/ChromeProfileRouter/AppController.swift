@@ -66,7 +66,7 @@ final class AppController: NSObject, NSApplicationDelegate, NSMenuDelegate {
         let root = NSMenuItem()
         let submenu = NSMenu()
         submenu.addItem(withTitle: "Settings…", action: #selector(showSettings), keyEquivalent: ",").target = self
-        submenu.addItem(withTitle: "Quit Chrome Profile Router", action: #selector(quit), keyEquivalent: "q").target = self
+        submenu.addItem(withTitle: "Quit Tabitat", action: #selector(quit), keyEquivalent: "q").target = self
         root.submenu = submenu
         appMenu.addItem(root)
         let edit = NSMenuItem()
@@ -78,7 +78,7 @@ final class AppController: NSObject, NSApplicationDelegate, NSMenuDelegate {
         NSApp.mainMenu = appMenu
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         item.button?.image = MenuBarIcon.make()
-        item.button?.toolTip = "Chrome Profile Router"
+        item.button?.toolTip = "Tabitat"
         let menu = NSMenu()
         menu.delegate = self
         updateProfileMenu(menu)

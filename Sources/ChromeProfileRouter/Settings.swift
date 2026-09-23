@@ -98,8 +98,8 @@ struct SettingsView: View {
                 Image(nsImage: NSApp.applicationIconImage)
                     .resizable().scaledToFit().frame(width: 56, height: 56)
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Chrome Profile Router").font(.system(size: 21, weight: .semibold))
-                    Text("The right profile, every time.").foregroundStyle(.secondary)
+                    Text("Tabitat").font(.system(size: 21, weight: .semibold))
+                    Text("A home for every link.").foregroundStyle(.secondary)
                 }
             }
             VStack(spacing: 0) {
@@ -237,7 +237,7 @@ final class SettingsWindow: NSObject, NSWindowDelegate {
         if window == nil {
             let content = NSHostingController(rootView: SettingsView(model: model, catalog: catalog))
             let window = NSWindow(contentViewController: content)
-            window.title = "Chrome Profile Router"
+            window.title = "Tabitat"
             window.styleMask = [.titled, .closable, .miniaturizable]
             window.isReleasedWhenClosed = false
             window.delegate = self

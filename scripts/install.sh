@@ -1,26 +1,38 @@
 #!/bin/bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-source_app="$PWD/dist/Chrome Profile Router.app"
-destination="/Applications/Chrome Profile Router.app"
-if [[ ! -x "$source_app/Contents/MacOS/ChromeProfileRouter" ]]; then
+source_app="$PWD/dist/Tabitat.app"
+destination="/Applications/Tabitat.app"
+legacy_destination="/Applications/Chrome Profile Router.app"
+bundle_id="com.furkansahin.ChromeProfileRouter"
+lsregister='/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister'
+if [[ ! -x "$source_app/Contents/MacOS/Tabitat" ]]; then
     echo "Build the app first with bash scripts/build.sh" >&2
     exit 1
 fi
 codesign --verify --strict "$source_app"
-if [[ -d "$destination" ]]; then
-    installed_id=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$destination/Contents/Info.plist")
-    if [[ "$installed_id" != "com.furkansahin.ChromeProfileRouter" ]]; then
-        echo "The destination belongs to a different app; leaving it untouched." >&2
+# Validate both destinations before moving either one.
+for installed_app in "$destination" "$legacy_destination"; do
+    [[ -e "$installed_app" ]] || continue
+    installed_id=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$installed_app/Contents/Info.plist")
+    if [[ "$installed_id" != "$bundle_id" ]]; then
+        echo "A destination belongs to a different app; leaving it untouched: $installed_app" >&2
         exit 1
     fi
-    if pgrep -f '^/Applications/Chrome Profile Router.app/Contents/MacOS/ChromeProfileRouter' >/dev/null; then
-        pkill -TERM -f '^/Applications/Chrome Profile Router.app/Contents/MacOS/ChromeProfileRouter'
-    fi
-    backup="$PWD/dist/Previous-$(date +%Y%m%d-%H%M%S).app"
-    ditto "$destination" "$backup"
+done
+process_pattern='^/Applications/(Tabitat|Chrome Profile Router)[.]app/Contents/MacOS/(Tabitat|ChromeProfileRouter)( |$)'
+if pgrep -f "$process_pattern" >/dev/null; then
+    pkill -TERM -f "$process_pattern"
 fi
+backup_root="$PWD/dist/Previous-$(date +%Y%m%d-%H%M%S)-$$"
+for installed_app in "$destination" "$legacy_destination"; do
+    [[ -d "$installed_app" ]] || continue
+    mkdir -p "$backup_root"
+    "$lsregister" -u "$installed_app"
+    mv "$installed_app" "$backup_root/$(basename "$installed_app")"
+done
 ditto "$source_app" "$destination"
-/System/Library/Frameworks/CoreServices.framework/Frameworks/LaunchServices.framework/Support/lsregister -f "$destination"
+codesign --verify --strict "$destination"
+"$lsregister" -f "$destination"
 open "$destination"
 echo "Installed: $destination"

@@ -1,4 +1,6 @@
-# Chrome Profile Router
+# Tabitat
+
+*A home for every link.*
 
 A small native macOS menu-bar app that sends links to the right Chrome profile, with a focused Chrome-only feature set.
 
@@ -18,7 +20,7 @@ bash scripts/build.sh
 bash scripts/install.sh
 ```
 
-The scripts prefer Command Line Tools when installed. Set `DEVELOPER_DIR` to use a specific Xcode installation. The build produces `dist/Chrome Profile Router.app` with a local ad-hoc signature. The installer copies it to `/Applications`, registers it, and opens Settings. Reinstalling saves a backup of the previous app under `dist/`.
+The scripts prefer Command Line Tools when installed. Set `DEVELOPER_DIR` to use a specific Xcode installation. The build produces `dist/Tabitat.app` with a local ad-hoc signature. The installer copies it to `/Applications`, registers it, and opens Settings. Reinstalling saves a backup of the previous app under `dist/`. The installer also replaces the earlier Chrome Profile Router installation. The stable bundle identifier preserves existing profile settings and browser associations.
 
 This repository builds a local app. Developer ID signing, notarization, and downloadable releases are not configured.
 

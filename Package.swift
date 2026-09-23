@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "ChromeProfileRouter",
+    name: "Tabitat",
     platforms: [.macOS(.v14)],
-    products: [.executable(name: "ChromeProfileRouter", targets: ["ChromeProfileRouter"])],
+    products: [.executable(name: "Tabitat", targets: ["ChromeProfileRouter"])],
     targets: [
         .target(name: "RouterCore"),
         .executableTarget(name: "ChromeProfileRouter", dependencies: ["RouterCore"]),

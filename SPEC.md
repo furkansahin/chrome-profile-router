@@ -1,4 +1,4 @@
-# Chrome Profile Router — specification
+# Tabitat — specification
 
 ## Purpose
 

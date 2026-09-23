@@ -21,7 +21,7 @@ enum MenuBarIcon {
             return true
         }
         image.isTemplate = true
-        image.accessibilityDescription = "Chrome Profile Router"
+        image.accessibilityDescription = "Tabitat"
         return image
     }
 }

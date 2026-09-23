@@ -29,6 +29,7 @@ Verified during implementation:
 - Settings preserved the chosen profile and displayed the editable source list, active link handling, and enabled login registration.
 - The owner confirmed a real iTerm link click opened in Work.
 - The installed menu-bar menu listed all discovered profiles above Settings and Quit. Clicking a profile opened the matching Chrome profile, confirmed through Chrome's profile menu.
+- The Tabitat rename built and installed successfully. macOS resolved both HTTP and HTTPS to `/Applications/Tabitat.app`; the existing Work profile preference remained saved under the unchanged bundle identifier.
 
 Checks were performed across development builds; the complete integration suite has not been repeated on every subsequent revision.
 
