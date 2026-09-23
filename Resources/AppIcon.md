@@ -4,6 +4,8 @@
 
 Created with the built-in image generation tool. The app name is not embedded in the artwork.
 
+The menu-bar counterpart is a monochrome vector silhouette in `Sources/ChromeProfileRouter/MenuBarIcon.swift`. macOS template rendering adapts it to the menu-bar appearance and selection state.
+
 ## Generation prompt
 
 Use case: logo-brand

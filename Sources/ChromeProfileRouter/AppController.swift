@@ -77,7 +77,7 @@ final class AppController: NSObject, NSApplicationDelegate, NSMenuDelegate {
         edit.submenu = editMenu; appMenu.addItem(edit)
         NSApp.mainMenu = appMenu
         let item = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-        item.button?.image = NSImage(systemSymbolName: "arrow.triangle.branch", accessibilityDescription: "Chrome Profile Router")
+        item.button?.image = MenuBarIcon.make()
         item.button?.toolTip = "Chrome Profile Router"
         let menu = NSMenu()
         menu.delegate = self
