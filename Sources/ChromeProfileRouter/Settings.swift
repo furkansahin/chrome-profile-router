@@ -95,9 +95,8 @@ struct SettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
             HStack(spacing: 14) {
-                Image(systemName: "arrow.triangle.branch")
-                    .font(.system(size: 29, weight: .medium)).foregroundStyle(.indigo)
-                    .frame(width: 56, height: 56).background(.indigo.opacity(0.09), in: RoundedRectangle(cornerRadius: 15))
+                Image(nsImage: NSApp.applicationIconImage)
+                    .resizable().scaledToFit().frame(width: 56, height: 56)
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Chrome Profile Router").font(.system(size: 21, weight: .semibold))
                     Text("The right profile, every time.").foregroundStyle(.secondary)
